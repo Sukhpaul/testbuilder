@@ -14,16 +14,30 @@
   // Once you've read this, go ahead and try to implement this function, then return to the console.
 
 var detectNetwork = function(cardNumber) {
-	let firstTwo = cardNumber[0] + cardNumber[1]
+	let prefix = +(cardNumber[0] + cardNumber[1])
 	let cardLength = cardNumber.length
+	
+	let visa = false;
+	if(cardNumber[0] === '4') {
+		visa = true;
+	}
 
-	if( firstTwo === '38' && cardLength === 14 || firstTwo === '39' && cardLength === 14) {
+	if(prefix === 38 && cardLength === 14 || prefix === 39 && cardLength === 14) {
 		return "Diner's Club";
 	}
 
-	if( firstTwo === '34' && cardLength === 15 || firstTwo === '37' && cardLength === 15) {
+	if(prefix === 34 && cardLength === 15 || prefix === 37 && cardLength === 15) {
 		return "American Express";
 	}
+
+    if(visa && cardLength === 13 || visa && cardLength === 16 || visa && cardLength === 19) {
+    	return 'Visa'
+    }
+
+    if(prefix >= 51 && prefix <= 55 && cardLength === 16) {
+    	return 'MasterCard'
+    }
+
 };
 
 
