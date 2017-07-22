@@ -38,6 +38,11 @@ var detectNetwork = function(cardNumber) {
     	return 'MasterCard'
     }
 
+//=======================================================================================================
+//      Discover Network
+//=======================================================================================================
+// Discover always has a prefix of 6011, 644-649, or 65, and a length of 16 or 19.
+
     let discPrefix = +(cardNumber[0] + cardNumber[1] + cardNumber[2] + cardNumber[3]);
 
 
@@ -57,8 +62,51 @@ var detectNetwork = function(cardNumber) {
     	}
     }
 
+//=======================================================================================================
+//      Maestro Network
+//=======================================================================================================
+// Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
+
+	let re = new RegExp("^5018|5020|5038|6304");
+
+	if(cardNumber.search(re) !== -1 && cardLength >= 12 || cardNumber.search(re) !== -1 && cardLength <= 19) {
+		return 'Maestro'
+	}
+
+
 };
 
-// Discover always has a prefix of 6011, 644-649, or 65, and a length of 16 or 19.
-// Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
