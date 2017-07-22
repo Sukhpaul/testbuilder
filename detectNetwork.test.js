@@ -24,7 +24,7 @@ describe('Introduction to Mocha Tests - READ ME FIRST', function() {
   it('Doesn\'t throw an error, so it doesn\'t fail', function() {
     // This test doesn't really test anything at all! It will pass no matter what.
     var even = function(num){
-      return num/2 === 0;
+      return num % 2 === 0;
     }
     return even(10) === true;
   });
@@ -42,6 +42,11 @@ describe('Introduction to Mocha Tests - READ ME FIRST', function() {
   });
 });
 
+//=======================================================================================================
+//      Diners Test
+//=======================================================================================================
+
+
 describe('Diner\'s Club', function() {
   // Be careful, tests can have bugs too...
 
@@ -58,6 +63,11 @@ describe('Diner\'s Club', function() {
  
   });
 });
+
+//=======================================================================================================
+//      Amex Test
+//=======================================================================================================
+
 
 describe('American Express', function() {
   // It can get annoying to keep typing the if/throw, so here is a
@@ -100,6 +110,12 @@ describe('Visa', function() {
   });
 });
 
+
+//=======================================================================================================
+//      MasterCard Test
+//=======================================================================================================
+
+
 describe('MasterCard', function() {
   // Chai lets you write more human-readable tests that throw helpful errors.
   // Expect syntax is one way to do this, but there are others. 
@@ -139,12 +155,51 @@ describe('MasterCard', function() {
  
 });
 
+
+//=======================================================================================================
+//      Discover Test
+//=======================================================================================================
+
+
 describe('Discover', function() {
   // Tests without a function will be marked as "pending" and not run
   // Implement these tests (and others) and make them pass!
-  it('has a prefix of 6011 and a length of 16');
-  it('has a prefix of 6011 and a length of 19');
+  let should = chai.should();
+
+  it('has a prefix of 6011 and a length of 16', function() {
+    (detectNetwork('6011567891012135')).should.equal('Discover');
+  });
+
+  it('has a prefix of 6011 and a length of 19', function() {
+    (detectNetwork('6011567891083512135')).should.equal('Discover');
+  });
+
+  it('has a prefix of 65 and a length of 16', function() {
+    (detectNetwork('6511567891012135')).should.equal('Discover');
+  });
+
+  it('has a prefix of 65 and a length of 19', function() {
+    (detectNetwork('6511567891083512135')).should.equal('Discover');
+  });
+
+  for (var prefix = 644; prefix <= 649; prefix++) {
+        (function(prefix) {
+          it('has a prefix of ' + prefix + ' and a length of 16', function() {
+            (detectNetwork(prefix + '1591083512135')).should.equal('Discover');
+          });
+
+          it('has a prefix of ' + prefix + ' and a length of 19', function() {
+            (detectNetwork(prefix + '1591053283512135')).should.equal('Discover');
+          });
+        })(prefix)
+      }
+
 });
+
+//=======================================================================================================
+//      Maestro Test
+//=======================================================================================================
+
 
 describe('Maestro', function() {
   // Write full test coverage for the Maestro card
