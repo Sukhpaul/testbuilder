@@ -14,8 +14,8 @@
   // Once you've read this, go ahead and try to implement this function, then return to the console.
 
 var detectNetwork = function(cardNumber) {
-	let prefix = +(cardNumber[0] + cardNumber[1])
-	let cardLength = cardNumber.length
+	let prefix = +(cardNumber[0] + cardNumber[1]);
+	let cardLength = cardNumber.length;
 	
 	let visa = false;
 	if(cardNumber[0] === '4') {
@@ -38,7 +38,27 @@ var detectNetwork = function(cardNumber) {
     	return 'MasterCard'
     }
 
+    let discPrefix = +(cardNumber[0] + cardNumber[1] + cardNumber[2] + cardNumber[3]);
+
+
+    if(prefix === 65 && cardLength === 16 || prefix === 65 && cardLength === 19) {
+    	return 'Discover'
+    }
+
+    if(discPrefix === 6011 && cardLength === 16 || discPrefix === 6011 && cardLength === 19) {
+    	return 'Discover'
+    }
+    
+    for(let i = 644; i <= 649; i++) {
+    	let cardPrefix = cardNumber[0] + cardNumber[1] + cardNumber[2];
+    	
+    	if(i === +cardPrefix && cardLength === 16 || i === +cardPrefix && cardLength === 19) {
+    		return 'Discover'
+    	}
+    }
+
 };
 
-
+// Discover always has a prefix of 6011, 644-649, or 65, and a length of 16 or 19.
+// Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
 
