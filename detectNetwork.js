@@ -35,7 +35,7 @@ var detectNetwork = function(cardNumber) {
     }
 
     if(prefix >= 51 && prefix <= 55 && cardLength === 16) {
-    	return 'MasterCard'
+        return 'MasterCard'
     }
 
 //=======================================================================================================
@@ -47,19 +47,19 @@ var detectNetwork = function(cardNumber) {
 
 
     if(prefix === 65 && cardLength === 16 || prefix === 65 && cardLength === 19) {
-    	return 'Discover'
+        return 'Discover'
     }
 
     if(discPrefix === 6011 && cardLength === 16 || discPrefix === 6011 && cardLength === 19) {
-    	return 'Discover'
+        return 'Discover'
     }
     
     for(let i = 644; i <= 649; i++) {
-    	let cardPrefix = cardNumber[0] + cardNumber[1] + cardNumber[2];
-    	
-    	if(i === +cardPrefix && cardLength === 16 || i === +cardPrefix && cardLength === 19) {
-    		return 'Discover'
-    	}
+        let cardPrefix = cardNumber[0] + cardNumber[1] + cardNumber[2];
+        
+        if(i === +cardPrefix && cardLength === 16 || i === +cardPrefix && cardLength === 19) {
+            return 'Discover'
+        }
     }
 
 //=======================================================================================================
@@ -67,11 +67,11 @@ var detectNetwork = function(cardNumber) {
 //=======================================================================================================
 // Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
 
-	let re = new RegExp("^5018|5020|5038|6304");
+    let re = new RegExp("^5018|5020|5038|6304");
 
-	if(cardNumber.search(re) !== -1 && cardLength >= 12 || cardNumber.search(re) !== -1 && cardLength <= 19) {
-		return 'Maestro'
-	}
+    if(cardNumber.search(re) !== -1 && cardLength >= 12 || cardNumber.search(re) !== -1 && cardLength <= 19) {
+        return 'Maestro'
+    }
 
 
 };
