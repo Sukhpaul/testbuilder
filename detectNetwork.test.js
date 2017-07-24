@@ -202,9 +202,9 @@ describe('Discover', function() {
 
 
 describe('Maestro', function() {
-  var should = chai.should();
+  let should = chai.should();
 
-  for (var strLength = 12; strLength <= 19; strLength++) {
+  for (let strLength = 12; strLength <= 19; strLength++) {
        str = '';
     for(i = 0; i <strLength - 4; i++) {
       str += '1';
@@ -215,8 +215,6 @@ describe('Maestro', function() {
           });
 
           it('has a prefix of 5020 and a length of ' + strLength, function() {
-            console.log(strLength);
-            console.log(str);
             detectNetwork('5020' + str).should.equal('Maestro');
           });
 
@@ -233,5 +231,80 @@ describe('Maestro', function() {
 
 });
 
-describe('should support China UnionPay')
+//=======================================================================================================
+//      China UnionPay Test
+//=======================================================================================================
+
+
+// China UnionPay always has a prefix of 622126-622925, 624-626, or 6282-6288 and 
+// a length of 16-19.
+
+describe('should support China UnionPay', function() {
+  let should = chai.should();
+
+  for (let chiPrefix = 624; chiPrefix <= 626; chiPrefix++) {
+    for(let strLength = 16; strLength <= 19; strLength++) {
+      str = '';
+      for(j = 0; j < strLength - 3; j++) {
+        str += '1';
+    }
+        (function(chiPrefix, str) {
+          it('has a prefix of ' + chiPrefix + ' and a length of ' + strLength, function() {
+            detectNetwork(chiPrefix + str).should.equal('China UnionPay');
+          });
+        })(chiPrefix, str)
+      }
+    }
+
+    for (let chiPrefix = 6282; chiPrefix <= 6288; chiPrefix++) {
+    for(let strLength = 16; strLength <= 19; strLength++) {
+      str = '';
+      for(j = 0; j < strLength - 4; j++) {
+        str += '1';
+    }
+        (function(chiPrefix, str) {
+          it('has a prefix of ' + chiPrefix + ' and a length of ' + strLength, function() {
+            detectNetwork(chiPrefix + str).should.equal('China UnionPay');
+          });
+        })(chiPrefix, str)
+      }
+    }
+
+    for (let chiPrefix = 622126; chiPrefix <= 622925; chiPrefix++) {
+    for(let strLength = 16; strLength <= 19; strLength++) {
+      str = '';
+      for(j = 0; j < strLength - 6; j++) {
+        str += '1';
+    }
+        (function(chiPrefix, str) {
+          it('has a prefix of ' + chiPrefix + ' and a length of ' + strLength, function() {
+            detectNetwork(chiPrefix + str).should.equal('China UnionPay');
+          });
+        })(chiPrefix, str)
+      }
+    }
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 describe('should support Switch')
