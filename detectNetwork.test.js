@@ -202,26 +202,33 @@ describe('Discover', function() {
 
 
 describe('Maestro', function() {
-  var suffix = '12345678'
-  for (var length = 12; length <= 19; length++) {
-    suffix += '1';
-        (function(length) {
-          it('has a prefix of 5018 and a length of ' + length, function() {
-            (detectNetwork('5018' + length)).should.equal('Maestro');
+  var should = chai.should();
+
+  for (var strLength = 12; strLength <= 19; strLength++) {
+       str = '';
+    for(i = 0; i <strLength - 4; i++) {
+      str += '1';
+    }
+        (function(strLength, str) {
+          it('has a prefix of 5018 and a length of ' + strLength, function() {
+            detectNetwork('5018' + str).should.equal('Maestro');
           });
 
-          it('has a prefix of 5020 and a length of ' + length, function() {
-            (detectNetwork('5020' + length)).should.equal('Maestro');
+          it('has a prefix of 5020 and a length of ' + strLength, function() {
+            console.log(strLength);
+            console.log(str);
+            detectNetwork('5020' + str).should.equal('Maestro');
           });
 
-          it('has a prefix of 5038 and a length of ' + length, function() {
-            (detectNetwork('5038' + length)).should.equal('Maestro');
+            
+          it('has a prefix of 5038 and a length of ' + strLength, function() {
+            detectNetwork('5038' + str).should.equal('Maestro');
           });
-
-          it('has a prefix of 6304 and a length of ' + length, function() {
-            (detectNetwork('6304' + length)).should.equal('Maestro');
+          
+          it('has a prefix of 6304 and a length of ' + strLength, function() {
+            detectNetwork('6304' + str).should.equal('Maestro');
           });
-        })(length)
+        })(strLength, str)
       }
 
 });
