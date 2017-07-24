@@ -69,7 +69,7 @@ var detectNetwork = function(cardNumber) {
 
     let re = new RegExp("^5018|5020|5038|6304");
 
-    if(cardNumber.search(re) !== -1 && cardLength >= 12 || cardNumber.search(re) !== -1 && cardLength <= 19) {
+    if(cardNumber.search(re) !== -1 && cardLength >= 12 && cardLength <= 19) {
         return 'Maestro'
     }
 
