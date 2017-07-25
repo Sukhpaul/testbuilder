@@ -30,12 +30,18 @@ var detectNetwork = function(cardNumber) {
 		return "American Express";
 	}
 
+    let switchRe = new RegExp("^4903|^4905|^4911|^4936|^564182|^633110|^6333|^6759");
+
+    if(cardNumber.search(switchRe) !== -1) {
+        visa = false;
+    }
+
     if(visa && cardLength === 13 || visa && cardLength === 16 || visa && cardLength === 19) {
-    	return 'Visa'
+    	return 'Visa';
     }
 
     if(prefix >= 51 && prefix <= 55 && cardLength === 16) {
-        return 'MasterCard'
+        return 'MasterCard';
     }
 
 //=======================================================================================================
@@ -47,18 +53,18 @@ var detectNetwork = function(cardNumber) {
 
 
     if(prefix === 65 && cardLength === 16 || prefix === 65 && cardLength === 19) {
-        return 'Discover'
+        return 'Discover';
     }
 
     if(discPrefix === 6011 && cardLength === 16 || discPrefix === 6011 && cardLength === 19) {
-        return 'Discover'
+        return 'Discover';
     }
     
     for(let i = 644; i <= 649; i++) {
         let cardPrefix = cardNumber[0] + cardNumber[1] + cardNumber[2];
         
         if(i === +cardPrefix && cardLength === 16 || i === +cardPrefix && cardLength === 19) {
-            return 'Discover'
+            return 'Discover';
         }
     }
 
@@ -70,7 +76,7 @@ var detectNetwork = function(cardNumber) {
     let re = new RegExp("^5018|^5020|^5038|^6304");
 
     if(cardNumber.search(re) !== -1 && cardLength >= 12 && cardLength <= 19) {
-        return 'Maestro'
+        return 'Maestro';
     }
 
 
@@ -81,20 +87,31 @@ var detectNetwork = function(cardNumber) {
 // China UnionPay always has a prefix of 622126-622925, 624-626, 
 // or 6282-6288 and a length of 16-19.
 
-    let chinaRe = new RegExp("^62[4-6]|^628[2-8]|^622[1[0-9][0-9]|2[0-9][0-9]|3[0-9][0-9]|4[0-9][0-9]|5[0-9][0-9]|6[0-9][0-9]|7[0-9][0-9]|8[0-1][0-9]|9[0-2][0-9]|92[0-5]");
+    let chinaRe = new RegExp("^62[4-6]|^628[2-8]");
         
     if(cardNumber.search(chinaRe) !== -1 && cardLength >= 16  && cardLength <= 19) {
-            return 'China UnionPay'
+        return 'China UnionPay';
     }
 
+    for(let j = 622126; j <= 622925; j++) {
+        let chinaPrefix = cardNumber.split('').slice(0,6).join('');
+        
+        if(j === +chinaPrefix && cardLength === 16 || j === +chinaPrefix && cardLength === 17 || j === +chinaPrefix && cardLength === 18 || j === +chinaPrefix && cardLength === 19) {
+            return 'China UnionPay';
+        }
+    };
+
 //=======================================================================================================
-//      China UnionPay Network
+//      Swtich Network
 //=======================================================================================================
 
 // Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 
 // and a length of 16, 18, or 19.
-
-
+    
+   if(cardLength === 16 || cardLength === 18 || cardLength === 19) {
+        return 'Switch';
+   }
+    
 };
 
 
