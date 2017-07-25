@@ -32,7 +32,7 @@ var detectNetwork = function(cardNumber) {
 
     let switchRe = new RegExp("^4903|^4905|^4911|^4936|^564182|^633110|^6333|^6759");
 
-    if(cardNumber.search(switchRe) !== -1) {
+    if(cardNumber.search(switchRe) !== -1 && cardLength !== 13) {
         visa = false;
     }
 
@@ -93,22 +93,23 @@ var detectNetwork = function(cardNumber) {
         return 'China UnionPay';
     }
 
+    let chinaPrefix = cardNumber.split('').slice(0,6).join('');
+
     for(let j = 622126; j <= 622925; j++) {
-        let chinaPrefix = cardNumber.split('').slice(0,6).join('');
         
-        if(j === +chinaPrefix && cardLength === 16 || j === +chinaPrefix && cardLength === 17 || j === +chinaPrefix && cardLength === 18 || j === +chinaPrefix && cardLength === 19) {
+        if(j === +chinaPrefix && cardLength >=16 && cardLength <= 19) {
             return 'China UnionPay';
         }
     };
 
 //=======================================================================================================
-//      Swtich Network
+//      Switch Network
 //=======================================================================================================
 
 // Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 
 // and a length of 16, 18, or 19.
     
-   if(cardLength === 16 || cardLength === 18 || cardLength === 19) {
+   if(cardNumber.search(switchRe) !== -1 && cardLength === 16 || cardNumber.search(switchRe) !== -1 && cardLength === 18 || cardNumber.search(switchRe) !== -1 && cardLength === 19) {
         return 'Switch';
    }
     
